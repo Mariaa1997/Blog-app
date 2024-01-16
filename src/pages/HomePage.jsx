@@ -52,15 +52,24 @@ const HomePage = () => {
     <>
     <NavBar/>
 <div className="px-8 md:px-[200px] min-h-[80vh]">
-        {loading?<div className="h-[40vh] flex justify-center items-center"><Loading/></div>:!noResults?
-        posts.map((post)=>(
-          <>
-          <Link to={user?`/posts/post/${post._id}`:"/login"}>
-          <Dashboard key={post._id} post={post}/>
-          </Link>
-          </>
-          
-        )):<h3 className="text-center font-bold mt-16">No posts available</h3>}
+{loading ? (
+  <div className="h-[40vh] flex justify-center items-center">
+    <Loading />
+  </div>
+) : (
+  Array.isArray(posts) && posts.length > 0 ? (
+    posts.map((post) => (
+      <Link key={post._id} to={user ? `/posts/post/${post._id}` : "/login"}>
+        <Dashboard key={post._id} post={post} />
+      </Link>
+    ))
+  ) : (
+    <h3 className="text-center font-bold mt-16">
+      {noResults ? "No posts available" : "Loading..."}
+    </h3>
+  )
+)}
+
     </div>
     <Footer/>
     </>

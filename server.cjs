@@ -19,7 +19,8 @@ const connectDB = async () => {
         await mongoose.connect(process.env.MONGO_URI)
         console.log('connected to mongo')
     } catch (error) {
-        console.log(error)
+        console.error("mongo connection error:",error);
+        throw new Error("unable to connect to the database")
     }
 }
 
@@ -49,7 +50,15 @@ const storage = multer.diskStorage({
 //upload img
 const upload = multer({storage:storage})
 app.post("/api/upload",upload.single('file'),(req,res) => {
-    res.status(200).json("image has been uploaded")
+    try {
+        //handle the successful upload
+        res.status(200).json("image has been uploaded")
+    } catch (error) {
+        //handle upload error
+        console.error("image upload error:",error);
+        res.status(500).json("Image upload failed")
+    }
+    
 })
 
 // to return the index.html on all non-AJAX requests

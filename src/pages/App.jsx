@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import HomePage from './HomePage'
+import HomePage from './HomePage';
 import SignUpForm from "../components/SignUpForm";
 import LoginForm from "../components/LoginForm";
-import PostDetailsPage from "./PostDetailsPage"
+import PostDetailsPage from "./PostDetailsPage";
 import CreatePostPage from "./CreatePostPage";
 import EditPostPage from "./EditPostPage";
-import ProfilePage from './ProfilePage'
-import { UserContextProvider } from "../context/UserContext";
 import BlogPage from "./BlogPage";
+import ProfilePage from './ProfilePage';
+import { UserContextProvider } from "../context/UserContext";
 
 const App = () => {
   return (
@@ -22,8 +22,9 @@ const App = () => {
         <Route path="/blog/:id" element={<BlogPage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
       </Routes>
-     </UserContextProvider>
+    </UserContextProvider>
   );
 };
 
 export default App;
+
