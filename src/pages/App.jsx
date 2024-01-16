@@ -1,45 +1,29 @@
-// import dependencies
-import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
+import HomePage from './HomePage'
+import SignUpForm from "../components/SignUpForm";
+import LoginForm from "../components/LoginForm";
+import PostDetailsPage from "./PostDetailsPage"
+import CreatePostPage from "./CreatePostPage";
+import EditPostPage from "./EditPostPage";
+import ProfilePage from './ProfilePage'
+import { UserContextProvider } from "../context/UserContext";
+import BlogPage from "./BlogPage";
 
-// import my functionality that I've added
-import { getUser } from '../utilities/users-services';
-
-// css
-import './App.css'
-
-// import pages
-import AuthPage from './AuthPage';
-import NewOrderPage from './NewOrderPage';
-import OrderHistoryPage from './OrderHistoryPage';
-
-// import components
-import NavBar from '../components/NavBar';
-
-function App() {
-  const [user, setUser] = useState(getUser());
-
-  // in here
-  // use the useState hook to define a state variable called user
-  // initialize that to null
-  // the setter function should be named according to convention
+const App = () => {
   return (
-    <>
-      {
-        user
-          ?
-          <>
-            <NavBar user={user} setUser={setUser}/>
-            < Routes >
-              <Route path='/orders/new' element={<NewOrderPage />}/>
-              <Route path='/orders' element={<OrderHistoryPage />}/>
-            </Routes>
-          </>
-          :
-          < AuthPage setUser={setUser} />
-      }
-    </>
-  )
-}
+    <UserContextProvider>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/create" element={<CreatePostPage />} />
+        <Route path="/posts/post/:id" element={<PostDetailsPage />} />
+        <Route path="/edit/:id" element={<EditPostPage />} />
+        <Route path="/blog/:id" element={<BlogPage />} />
+        <Route path="/profile/:id" element={<ProfilePage />} />
+      </Routes>
+     </UserContextProvider>
+  );
+};
 
-export default App
+export default App;

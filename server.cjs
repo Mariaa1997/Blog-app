@@ -1,55 +1,63 @@
 // bring in all dependencies
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
+const dotenv=require('dotenv')
+const express = require("express");
+const mongoose=require("mongoose")
+const app = express();
+const cors = require('cors')
+const multer = require('multer')
+const path = require("path");
+const cookieParser= require('cookie-parser')
+const authRoute = require("./routes/api/auth.cjs");
+const userRoute = require("./routes/api/users.cjs")
+const postRoute = require("./routes/api/posts.cjs")
+const commentRoute =require("./routes/api/comments.cjs")
 
-// define variables
-const PORT = process.env.PORT || 3001;
 
 // Connect to the database
-require('./config/database.cjs');
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI)
+        console.log('connected to mongo')
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-// create my app
-const app = express();
+//middlewares
+dotenv.config();
 
-app.use(logger('dev'));
 app.use(express.json());
-
-// Configure both serve-favicon and static middlewares
-// to serve from the production build folder
-// in our case, the folder is called 'dist' because that is
-// what vite names it when we run the build script
-
-// == note == we may not use this, so I'm commenting it out for now
-// and I'll uncomment when we use it
-// ==
-// app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));
-app.use(express.static(path.join(__dirname, 'dist')));
-
-// Middleware to verify token and assign user object of payload to req.user.
-// Be sure to mount before routes
-app.use(require('./config/checkToken.cjs'));
-
-// Put API routes here, before the "catch all" routes
-app.get('/api/test', (req, res) => {
-    res.send('You just hit a API route');
-  });
-
-app.use('/api/users', require('./routes/api/users.cjs'));
-// we have included the line 
-// const userRouter = require('./routes/api/users.cjs')
-// app.use('/api/user', userRouter);
-
-// The following "catch all" route (note the /*) is necessary
-// to return the index.html on all non-AJAX requests
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-
-});
+app.use('/images', express.static(path.join(__dirname,"/images")))
+app.use(cors({origin:"http://localhost:5173",credentials:true}))
+app.use(cookieParser())
+app.use("/api/auth",authRoute)
+app.use("/api/users",userRoute)
+app.use("/api/posts",postRoute)
+app.use("/api/comments",commentRoute)
 
 
-app.listen(PORT, function () {
-    console.log(`Express app running on port: ${PORT}`);
+//images 
+const storage = multer.diskStorage({
+    destination:(req,file,fn) => {
+        fn(null, "images")
+    },
+    filename:(req,file,fn) => {
+        fn(null, req.body.img)
+    }
 })
+
+//upload img
+const upload = multer({storage:storage})
+app.post("/api/upload",upload.single('file'),(req,res) => {
+    res.status(200).json("image has been uploaded")
+})
+
+// to return the index.html on all non-AJAX requests
+// app.get("/*", function (req, res) {
+//   res.sendFile(path.join(__dirname, "dist", "index.html"));
+// });
+
+app.listen(process.env.PORT, function () {
+    connectDB()
+  console.log("Express app running on port:" +process.env.PORT);
+});

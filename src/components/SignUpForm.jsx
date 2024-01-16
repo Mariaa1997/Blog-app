@@ -1,69 +1,62 @@
-import React, { Component } from 'react'
-// import the SignUp method 
-import { signUp } from '../utilities/users-services';
+import { Link, useNavigate } from "react-router-dom"
+import Footer from "../components/Footer"
+import { useState } from "react"
+import axios from 'axios'
+import {URL} from '../utilities/url'
 
-export class SignUpForm extends Component {
-    state = {
-        name:'',
-        email:'',
-        password:'',
-        confirm:'',
-        error:''
-    };
 
-    // The object passed to setState is merged with the current state object
-    handleChange = (evt) => {
-        this.setState({
-            [evt.target.name]: evt.target.value,
-            error: ''
-        });
-    };
-        
-    handleSubmit = async (evt) => {
-        evt.preventDefault();
-        // alert(JSON.stringify(this.state));
-        try {
-            // We don't want to send the 'error' or 'confirm' property,
-            // so let's make a copy of the state object, then delete them
-            const formData = { ...this.state} // makes a copy of the state variable
-            delete formData.error;
-            delete formData.confirm;
-            // The promise returned by the signUp service method
-            // will resolve to the uder object included in the 
-            // payload of the JSON Web Token (JWT)
-            const user = await signUp(formData);
-            // Baby Step!
-            // console.log(user);
-            this.props.setUser(user);
+const SignUpForm = () => {
 
-        } catch {
-            // An error occured
-            this.setState({error: 'Sign Up Failed - Try Again'});
-        }
+  const [username,setUsername]=useState("")
+  const [email,setEmail]=useState("")
+  const [password,setPassword]=useState("")
+  const [error,setError]=useState(false)
+  const navigate=useNavigate()
+
+  const handleRegister=async ()=>{
+    
+    try{
+      const res=await axios.post(URL+"/api/auth/register",{username,email,password})
+      setUsername(res.data.username)
+      setEmail(res.data.email)
+      setPassword(res.data.password)
+      setError(false)
+      navigate("/login")
+      
+    }
+    catch(err){
+      setError(true)
+      console.log(err)
     }
 
-  render() {
-    const disable = this.state.password !== this.state.confirm;
-
-    return (
-        <div>
-            <div className='form=container'>
-                <form autoComplete='off' onSubmit={this.handleSubmit}>
-                <label>Name</label>
-                <input type="text" name="name" value={this.state.name} onChange={this.handleChange} required />
-                <label>Email</label>
-                <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
-                <label>Password</label>
-                <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required />
-                <label>Confirm</label>
-                <input type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
-                <button type='submit' disabled={disable}>SIGN UP</button>
-                </form>
-            </div>
-            <p className="error-message">&nbsp;{this.state.error}</p>
-        </div>
-    )
   }
+
+  
+
+  return (
+    <>
+      <div className="flex items-center justify-between px-6 md:px-[200px] py-4">
+    <h1 className="text-lg md:text-xl font-extrabold"><Link to="/">My Blog</Link></h1>
+    <h3><Link to="/login">Login</Link></h3>
+    </div>
+    <div className="w-full flex justify-center items-center h-[80vh] ">
+       <div className="flex flex-col justify-center items-center space-y-4 w-[80%] md:w-[25%]">
+         <h1 className="text-xl font-bold text-left">Create an account</h1>
+         <input onChange={(e)=>setUsername(e.target.value)} className="w-full px-4 py-2 border-2 border-black outline-0" type="text" placeholder="Enter your username" />
+         <input onChange={(e)=>setEmail(e.target.value)} className="w-full px-4 py-2 border-2 border-black outline-0" type="text" placeholder="Enter your email" />
+         <input onChange={(e)=>setPassword(e.target.value)} className="w-full px-4 py-2 border-2 border-black outline-0" type="password" placeholder="Enter your password" />
+         <button onClick={handleRegister} className="w-full px-4 py-4 text-lg font-bold text-white bg-black rounded-lg hover:bg-gray-500 hover:text-black ">Register</button>
+         {error && <h3 className="text-red-500 text-sm ">Sign Up- Failed</h3>}
+         <div className="flex justify-center items-center space-x-3">
+          <p>Already have an account?</p>
+          <p className="text-gray-500 hover:text-black"><Link to="/login">Click <strong>HERE</strong></Link></p>
+         </div>
+       </div>
+    </div>
+    <Footer/>
+    </>
+    
+  )
 }
 
 export default SignUpForm
