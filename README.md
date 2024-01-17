@@ -1,8 +1,18 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to my Blog!
 
-Currently, two official plugins are available:
+This is a full stack blog project using React vite, node.js, mongodb,express, JS,JSX, CJS, axios, cors and tailwindCss. 
+In this app you can create a profile, log in and out, create your posts with images and add categories and a description. After you created a post, you are able to see it in the homepage along side other posts that other users have created using this app and their own account. You can update and delete your profile as well. 
+When you make a post, you can click on your post and edit, update and delete, as well as add comments!
+
+This is a fun interactive app that you and your friends can use to share your thoughts!
+
+Unsolved Problems:
+I can't get into the individual post details and update/edit/delete
+
+Future Enhancements: A future enhancement will be adding videos and emojis (maybe) to make it more fun!
+also have the footers link to the each category to show all the posts according to that category. 
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

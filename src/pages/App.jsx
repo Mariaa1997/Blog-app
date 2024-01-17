@@ -7,7 +7,7 @@ import CreatePostPage from "./CreatePostPage";
 import EditPostPage from "./EditPostPage";
 import BlogPage from "./BlogPage";
 import ProfilePage from './ProfilePage';
-import { UserContextProvider } from "../context/UserContext";
+import { UserContextProvider } from "../Context/UserContext";
 
 const App = () => {
   return (
@@ -17,7 +17,7 @@ const App = () => {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/create" element={<CreatePostPage />} />
-        <Route path="/posts/post/:id" element={<PostDetailsPage />} />
+        <Route path="/posts/:id" element={<PostDetailsPage />} />
         <Route path="/edit/:id" element={<EditPostPage />} />
         <Route path="/blog/:id" element={<BlogPage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
@@ -27,4 +27,3 @@ const App = () => {
 };
 
 export default App;
-

@@ -1,7 +1,7 @@
 import { useContext } from "react"
-import { UserContext } from "../context/UserContext"
+import { UserContext } from "../Context/UserContext"
 import axios from "axios"
-import { URL } from "../utilities/url"
+// import { URL } from "../utilities/url"
 import { Link, useNavigate } from "react-router-dom"
 
 
@@ -12,7 +12,7 @@ const Menu = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get(URL + "/api/auth/logout", { withCredentials: true });
+      const res = await axios.get("/api/auth/logout", { withCredentials: true });
       setUser(null);
       navigate("/login");
     } catch (err) {
@@ -21,13 +21,13 @@ const Menu = () => {
   };
 
   return (
-    <div className="bg-black w-[200px] z-10 flex flex-col items-start absolute top-12 right-6 md:right-32 rounded-md p-4 space-y-4">
+    <div  className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 w-[200px] z-10 flex flex-col items-start rounded-sm p-4 space-y-4 shadow-lg absolute">
       {!user && <h3 className="text-white text-sm hover:text-gray-500 cursor-pointer"><Link to="/login">Login</Link></h3>}
       {!user && <h3 className="text-white text-sm hover:text-gray-500 cursor-pointer"><Link to="/signup">Sign Up</Link></h3>}
-      {user && <h3 className="text-white text-sm hover:text-gray-500 cursor-pointer"><Link to={"/profile/" + user._id}>Profile</Link></h3>}
-      {user && <h3 className="text-white text-sm hover:text-gray-500 cursor-pointer"><Link to="/create">Create</Link></h3>}
+      {user && <h3 className="text-white text-sm hover:text-gray-500 cursor-pointer"><Link to={"/profile/" + user._id}>My Profile</Link></h3>}
+      {user && <h3 className="text-white text-sm hover:text-gray-500 cursor-pointer"><Link to="/create">Let's Create</Link></h3>}
       {user && <h3 className="text-white text-sm hover:text-gray-500 cursor-pointer"><Link to={"/blog/" + user._id}>My blogs</Link></h3>}
-      {user && <h3 onClick={handleLogout} className="text-white text-sm hover:text-gray-500 cursor-pointer">Logout</h3>}
+      {user && <h3 onClick={handleLogout} className="text-white text-sm hover:text-gray-500 cursor-pointer font-bold">Logout</h3>}
     </div>
   );
 };

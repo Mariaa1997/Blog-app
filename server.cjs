@@ -11,8 +11,6 @@ const authRoute = require("./routes/api/auth.cjs");
 const userRoute = require("./routes/api/users.cjs")
 const postRoute = require("./routes/api/posts.cjs")
 const commentRoute =require("./routes/api/comments.cjs")
-
-
 // Connect to the database
 const connectDB = async () => {
     try {
@@ -23,10 +21,8 @@ const connectDB = async () => {
         throw new Error("unable to connect to the database")
     }
 }
-
 //middlewares
 dotenv.config();
-
 app.use(express.json());
 app.use('/images', express.static(path.join(__dirname,"/images")))
 app.use(cors({origin:"http://localhost:5173",credentials:true}))
@@ -35,8 +31,6 @@ app.use("/api/auth",authRoute)
 app.use("/api/users",userRoute)
 app.use("/api/posts",postRoute)
 app.use("/api/comments",commentRoute)
-
-
 //images 
 const storage = multer.diskStorage({
     destination:(req,file,fn) => {
@@ -46,7 +40,6 @@ const storage = multer.diskStorage({
         fn(null, req.body.img)
     }
 })
-
 //upload img
 const upload = multer({storage:storage})
 app.post("/api/upload",upload.single('file'),(req,res) => {
@@ -60,13 +53,11 @@ app.post("/api/upload",upload.single('file'),(req,res) => {
     }
     
 })
-
 // to return the index.html on all non-AJAX requests
 // app.get("/*", function (req, res) {
 //   res.sendFile(path.join(__dirname, "dist", "index.html"));
 // });
-
-app.listen(process.env.PORT, function () {
-    connectDB()
+app.listen(process.env.PORT, async function () {
+  await connectDB()
   console.log("Express app running on port:" +process.env.PORT);
 });

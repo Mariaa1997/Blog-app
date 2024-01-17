@@ -1,11 +1,11 @@
 import axios from "axios"
 import Footer from "../components/Footer"
 import NavBar from "../components/NavBar"
-import {IF, URL} from "../utilities/url"
+// import {IF, URL} from "../utilities/url"
 import { useContext, useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import Loading from "../components/Loading"
-import { UserContext } from "../context/UserContext"
+import { UserContext } from "../Context/UserContext"
 import Dashboard from "../components/Dashboard"
 
 
@@ -22,7 +22,7 @@ const HomePage = () => {
   const fetchPosts=async()=>{
     setLoading(true)
     try{
-      const res=await axios.get(URL+"/api/posts/"+search)
+      const res=await axios.get("/api/posts/"+search)
       // console.log(res.data)
       setPosts(res.data)
       if(res.data.length===0){
@@ -51,15 +51,15 @@ const HomePage = () => {
     
     <>
     <NavBar/>
-<div className="px-8 md:px-[200px] min-h-[80vh]">
+<div className="px-8 md:px-[200px] min-h-[80vh] bg-gradient-to-b from-pink-500 to-purple-500 text-white">
 {loading ? (
-  <div className="h-[40vh] flex justify-center items-center">
+  <div className="h-[40vh] flex flex-col-reverse justify-center items-center">
     <Loading />
   </div>
 ) : (
   Array.isArray(posts) && posts.length > 0 ? (
     posts.map((post) => (
-      <Link key={post._id} to={user ? `/posts/post/${post._id}` : "/login"}>
+      <Link key={post._id} to={user ? `/posts/${post._id}` : "/login"}>
         <Dashboard key={post._id} post={post} />
       </Link>
     ))

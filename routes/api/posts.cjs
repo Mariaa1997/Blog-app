@@ -5,18 +5,23 @@ const User = require("../../models/User.cjs");
 const bcrypt = require("bcrypt");
 const Post = require("../../models/Post.cjs");
 const Comment = require("../../models/Comment.cjs");
-
 // CREATE
 router.post("/create", checkToken, async (req, res) => {
   try {
-    const newPost = new Post(req.body);
+    const post = {
+      title: req.body.title,
+      desc: req.body.desc,
+      categories: req.body.categories,
+      photo: req.body.photo,
+      userId: req.userId
+    }
+    const newPost = new Post(post);
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 });
-
 // UPDATE
 router.put("/:id", checkToken, async (req, res) => {
   try {
@@ -30,7 +35,6 @@ router.put("/:id", checkToken, async (req, res) => {
     res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 });
-
 // DELETE
 router.delete("/:id", checkToken, async (req, res) => {
   try {
@@ -40,7 +44,6 @@ router.delete("/:id", checkToken, async (req, res) => {
     res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 });
-
 // GET POST DETAILS
 router.get("/:id", async (req, res) => {
   try {
@@ -50,11 +53,9 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 });
-
 // GET ALL POSTS or SEARCH
 router.get("/", async (req, res) => {
   const query = req.query;
-
   try {
     const searchFilter = {
       title: { $regex: query.search, $options: "i" },
@@ -65,7 +66,6 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error", details: err.message });
   }
 });
-
 // GET USER POSTS
 router.get("/user/:userId", async (req, res) => {
   try {
@@ -75,7 +75,4 @@ router.get("/user/:userId", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 });
-
 module.exports = router;
-
-

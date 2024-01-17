@@ -1,15 +1,15 @@
 import axios from "axios";
 import { MdDelete } from "react-icons/md";
-import { URL } from "../utilities/url";
+// import { URL } from "../utilities/url";
 import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../Context/UserContext";
 
 const Comments = ({ c, post, setComments }) => {
   const { user } = useContext(UserContext);
 
   const deleteComment = async (id) => {
     try {
-      await axios.delete(URL + "/api/comments/" + id, {
+      await axios.delete("/api/comments/" + id, {
         withCredentials: true,
       });
       // Update the state to remove the deleted comment

@@ -5,9 +5,9 @@ import { MdDelete } from "react-icons/md";
 import Comments from "../components/Comments";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { IF, URL } from "../utilities/url";
+import { IF } from "../utilities/url";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../Context/UserContext";
 import Loading from "../components/Loading";
 
 const PostDetailsPage = () => {
@@ -21,7 +21,7 @@ const PostDetailsPage = () => {
 
   const fetchPost = async () => {
     try {
-      const res = await axios.get(URL + "/api/posts/" + postId);
+      const res = await axios.get("/api/posts/" + postId);
       setPost(res.data);
     } catch (error) {
       console.log(error);
@@ -30,7 +30,7 @@ const PostDetailsPage = () => {
 
   const handleDeletePost = async () => {
     try {
-      const res = await axios.delete(URL + "/api/posts/" + postId, {
+      const res = await axios.delete("/api/posts/" + postId, {
         withCredentials: true,
       });
       console.log(res.data);
@@ -47,7 +47,7 @@ const PostDetailsPage = () => {
   const fetchPostComments = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(URL + "/api/comments/post/" + postId);
+      const res = await axios.get("/api/comments/post/" + postId);
       setComments(res.data);
       setLoading(false);
     } catch (error) {
@@ -64,7 +64,7 @@ const PostDetailsPage = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        URL + "/api/comments/create",
+        "/api/comments/create",
         {
           comment: comment,
           author: user.username,
@@ -80,7 +80,7 @@ const PostDetailsPage = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gradient-to-r from-pink-500 to-purple-500 text-white min-h-screen">
       <NavBar />
       {Loading ? (
         <div className="h-[80vh] flex justify-center items-center w-full">
@@ -89,7 +89,7 @@ const PostDetailsPage = () => {
       ) : (
         <div className="px-8 md:px-[200px] mt-8">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-black md:text-3xl">
+            <h1 className="text-3xl font-bold mb-4 md:text-4xl">
               {post.title}
             </h1>
             {user?._id === post?.userId && (
@@ -113,14 +113,14 @@ const PostDetailsPage = () => {
               <p>{new Date(post.updatedAt).toString().slice(16, 24)}</p>
             </div>
           </div>
-          <img src={IF + post.photo} className="w-full  mx-auto mt-8" alt="" />
+          <img src={IF + post.photo} className="w-full mx-auto mt-8 rounded-lg" alt="" />
           <p className="mx-auto mt-8">{post.desc}</p>
           <div className="flex items-center mt-8 space-x-4 font-semibold">
             <p>Categories:</p>
             <div className="flex justify-center items-center space-x-2">
               {post.categories?.map((c, i) => (
                 <>
-                  <div key={i} className="bg-gray-300 rounded-lg px-3 py-1">
+                  <div key={i} className="bg-pink-200 text-pink-700 rounded-lg px-3 py-1">
                     {c}
                   </div>
                 </>
@@ -128,7 +128,7 @@ const PostDetailsPage = () => {
             </div>
           </div>
           <div className="flex flex-col mt-4">
-            <h3 className="mt-6 mb-4 font-semibold">Comments:</h3>
+            <h3 className="mt-6 mb-4 font-semibold text-2xl">Comments:</h3>
             {comments?.map((c) => (
               <Comments key={c._id} c={c} post={post} />
             ))}
@@ -139,11 +139,11 @@ const PostDetailsPage = () => {
               onChange={(e) => setComment(e.target.value)}
               type="text"
               placeholder="Write a comment"
-              className="md:w-[80%] outline-none py-2 px-4 mt-4 md:mt-0"
+              className="md:w-[80%] outline-none py-2 px-4 mt-4 md:mt-0 rounded-md border-2 border-pink-200 bg-white text-black"
             />
             <button
               onClick={postComment}
-              className="bg-black text-sm text-white px-2 py-2 md:w-[20%] mt-4 md:mt-0"
+              className="bg-pink-500 text-sm text-white px-2 py-2 md:w-[20%] mt-4 md:mt-0 rounded-md hover:bg-pink-600"
             >
               Add Comment
             </button>

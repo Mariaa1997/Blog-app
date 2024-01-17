@@ -3,9 +3,9 @@ import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import { ImCross } from "react-icons/im";
 import axios from "axios";
-import { URL } from "../utilities/url";
+// import { URL } from "../utilities/url";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../Context/UserContext";
 
 const EditPost = () => {
   const postId = useParams().id;
@@ -14,16 +14,16 @@ const EditPost = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState(null);
-  const [cat, setCat] = useState("");
-  const [cats, setCats] = useState([]);
+  const [dog, setDog] = useState("");
+  const [dogs, setDogs] = useState([]);
 
   const fetchPost = async () => {
     try {
-      const res = await axios.get(URL + "/api/posts/" + postId);
+      const res = await axios.get("/api/posts/" + postId);
       setTitle(res.data.title);
       setDesc(res.data.desc);
       setFile(res.data.photo);
-      setCats(res.data.categories);
+      setDogs(res.data.categories);
     } catch (err) {
       console.log(err);
     }
@@ -36,7 +36,7 @@ const EditPost = () => {
       desc,
       username: user.username,
       userId: user._id,
-      categories: cats,
+      categories: dogs,
     };
 
     if (file) {
@@ -48,7 +48,7 @@ const EditPost = () => {
       // console.log(data)
       //img upload
       try {
-        const imgUpload = await axios.post(URL + "/api/upload", data);
+        const imgUpload = await axios.post("/api/upload", data);
         // console.log(imgUpload.data)
       } catch (err) {
         console.log(err);
@@ -57,10 +57,10 @@ const EditPost = () => {
     //post upload
 
     try {
-      const res = await axios.put(URL + "/api/posts/" + postId, post, {
+      const res = await axios.put("/api/posts/" + postId, post, {
         withCredentials: true,
       });
-      navigate("/posts/post/" + res.data._id);
+      navigate("/posts/:id" + res.data._id);
       // console.log(res.data)
     } catch (err) {
       console.log(err);
@@ -72,19 +72,19 @@ const EditPost = () => {
   }, [postId]);
 
   const deleteCategory = (i) => {
-    let updatedCats = [...cats];
-    updatedCats.splice(i);
-    setCats(updatedCats);
+    let updatedDogs = [...dogs];
+    updatedDogs.splice(i);
+    setDogs(updatedDogs);
   };
 
   const addCategory = () => {
-    let updatedCats = [...cats];
-    updatedCats.push(cat);
-    setCat("");
-    setCats(updatedCats);
+    let updatedDogs = [...dogs];
+    updatedDogs.push(dog);
+    setDog("");
+    setDogs(updatedDogs);
   };
   return (
-    <div>
+    <div className="flex flex-col h-screen bg-gradient-to-b from-pink-500 via-purple-500 to-purple-600 text-white">
       <NavBar />
       <div className="px-6 md:px-[200px] mt-8">
         <h1 className="font-bold md:text-2xl text-xl ">Update post</h1>
@@ -94,19 +94,19 @@ const EditPost = () => {
             value={title}
             type="text"
             placeholder="Enter post title"
-            className="px-4 py-2 outline-none"
+            className="px-4 py-2 outline-none bg-transparent border-b-2 border-white text-white placeholder-white focus:border-pink-500"
           />
           <input
             onChange={(e) => setFile(e.target.files[0])}
             type="file"
-            className="px-4"
+            className="px-4 bg-transparent text-white"
           />
           <div className="flex flex-col">
             <div className="flex items-center space-x-4 md:space-x-8">
               <input
-                value={cat}
-                onChange={(e) => setCat(e.target.value)}
-                className="px-4 py-2 outline-none"
+                value={dog}
+                onChange={(e) => setDog(e.target.value)}
+                className="px-4 py-2 outline-none bg-transparent border-b-2 border-white text-white placeholder-white focus:border-pink-500"
                 placeholder="Enter post category"
                 type="text"
               />
@@ -120,7 +120,7 @@ const EditPost = () => {
 
             {/* categories */}
             <div className="flex px-4 mt-3">
-              {cats?.map((c, i) => (
+              {dogs?.map((c, i) => (
                 <div
                   key={i}
                   className="flex justify-center items-center space-x-2 mr-4 bg-gray-200 px-2 py-1 rounded-md"
@@ -141,7 +141,7 @@ const EditPost = () => {
             value={desc}
             rows={15}
             cols={30}
-            className="px-4 py-2 outline-none"
+            className="px-4 py-2 outline-none bg-transparent border-2 border-white text-white placeholder-white focus:border-pink-500"
             placeholder="Enter post description"
           />
           <button

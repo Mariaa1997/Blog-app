@@ -2,9 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../Context/UserContext";
 import axios from "axios";
-import { URL } from "../utilities/url";
+// import { URL } from "../utilities/url";
 import Dashboard from "../components/Dashboard";
 import Loading from "../components/Loading";
 
@@ -18,7 +18,7 @@ const BlogPage = () => {
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(URL + "/api/posts/user/" + user._id);
+      const res = await axios.get("/api/posts/user/" + user._id);
       setPosts(res.data);
       setNoResults(res.data.length === 0);
       setLoading(false);
@@ -35,9 +35,12 @@ const BlogPage = () => {
   console.log(posts);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-pink-500 via-purple-500 to-purple-600 text-white">
       <NavBar />
-      <div className="px-8 md:px-[200px] min-h-[80vh]">
+      <div className="px-8 md:px-[200px] flex-grow">
+      <h1 className="font-extrabold md:text-4xl text-2xl mb-8 text-center">
+          Your Blog Posts
+        </h1>
         {loading ? (
           <div className="h-[40vh] flex justify-center items-center">
             <Loading />
@@ -46,13 +49,13 @@ const BlogPage = () => {
           posts.map((post) => (
             <Link
               key={post._id}
-              to={user ? `/posts/post/${post._id}` : "/login"}
+              to={user ? `/posts/${post._id}` : "/login"}
             >
               <Dashboard key={post._id} post={post} />
             </Link>
           ))
         ) : (
-          <h3 className="text-center font-bold mt-16">No posts available</h3>
+          <h3 className="text-center font-bold mt-16"> No posts available. Start creating!</h3>
         )}
       </div>
       <Footer />
