@@ -25,8 +25,8 @@ ERD Model:
 ### ERD https://www.figma.com/file/VknmxXBYEFvbDChEk4AnXE/Untitled?type=whiteboard&node-id=7%3A17&t=0Flc57M0hNpPrCyB-1
 
 
-Resources used:
-https://www.youtube.com/watch?v=zuye-dYSkS0&t=15716s
+# Resources used:
+<p>https://www.youtube.com/watch?v=zuye-dYSkS0&t=15716s</p>
 https://www.youtube.com/watch?v=xKs2IZZya7c
 https://www.npmjs.com/package/multer
 https://www.npmjs.com/package/cors
@@ -35,4 +35,4 @@ https://tailwindcss.com/docs/guides/vite
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# mern-infrastructure-vite
+# My Blog Application
