@@ -27,10 +27,10 @@ ERD Model:
 
 # Resources used:
 <p>https://www.youtube.com/watch?v=zuye-dYSkS0&t=15716s</p>
-https://www.youtube.com/watch?v=xKs2IZZya7c
-https://www.npmjs.com/package/multer
-https://www.npmjs.com/package/cors
-https://tailwindcss.com/docs/guides/vite
+<p>https://www.youtube.com/watch?v=xKs2IZZya7c</p>
+<p>https://www.npmjs.com/package/multer</p>
+<p>https://www.npmjs.com/package/cors</p>
+<p>https://tailwindcss.com/docs/guides/vite</p>
 
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
