@@ -67,7 +67,7 @@ const CreatePostPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-b from-purple-500 to-blue-500 text-white w-full">
+    <div className="flex flex-col bg-gradient-to-b from-purple-500 to-blue-500 text-white w-full">
    <NavBar />
       <div className="flex-grow p-6 md:p-[200px]">
         <h1 className="font-extrabold md:text-4xl text-2xl mb-8 text-center">Let's Create Something Awesome!</h1>

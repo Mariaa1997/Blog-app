@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import axios from "axios";
-import { IF, URL } from "../utilities/url";
-import { UserContext } from "../context/UserContext";
+// import { IF, URL } from "../utilities/url";
+import { UserContext } from "../Context/UserContext";
 import { useNavigate, useParams } from "react-router-dom";
 import ProfilePosts from "../components/ProfilePosts";
 

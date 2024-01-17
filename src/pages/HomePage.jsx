@@ -51,7 +51,7 @@ const HomePage = () => {
     
     <>
     <NavBar/>
-<div className="px-8 md:px-[200px] min-h-[80vh] bg-gradient-to-b from-pink-500 to-purple-500 text-white">
+<div className="px-8 flex flex-col md:px-[100px] min-h-[80vh] bg-gradient-to-b from-pink-500 to-purple-500 text-white">
 {loading ? (
   <div className="h-[40vh] flex flex-col-reverse justify-center items-center">
     <Loading />

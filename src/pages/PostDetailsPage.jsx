@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IF } from "../utilities/url";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context/UserContext";
-import Loading from "../components/Loading";
+// import Loading from "../components/Loading";
 
 const PostDetailsPage = () => {
   const postId = useParams().id;

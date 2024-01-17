@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <>
       <div className="mt-8 w-full text-white text-center text-2xl font-bold mb-4 animate-bounce">
-      <p className="text-white text-2xl font-bold animate-bounce">maria@email.com</p>
+      <p className="text-white text-2xl font-bold animate-bounce">Contact Us: Blog@email.com</p>
       </div>
       <div className="w-full bg-gradient-to-r from-pink-500 to-purple-500 px-8 md:px-[500] flex flex-col md:flex-row space-y-4 md:space-y-0 items-start md:justify-between text-sm md:text-md py-8 transition duration-300 ease-in-out transform hover:scale-105">
         <div className="flex flex-col text-white md:mr-8">
