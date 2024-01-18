@@ -24,6 +24,8 @@ WireFrame
 ERD Model:
 ### ERD https://www.figma.com/file/VknmxXBYEFvbDChEk4AnXE/Untitled?type=whiteboard&node-id=7%3A17&t=0Flc57M0hNpPrCyB-1
 
+Render Deploy Link:
+### blog app https://my-blog-application-bak7.onrender.com/
 
 # Resources used:
 <p>https://www.youtube.com/watch?v=zuye-dYSkS0&t=15716s</p>
